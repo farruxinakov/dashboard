@@ -70,7 +70,7 @@ const DashboardClient: React.FC<DashboardClientProps> = ({ data }) => {
       <Separator />
       <ChartContainer
         config={chartConfig}
-        className="max-h-[calc(100dvh-23.125rem)] min-h-[calc(100dvh-23.125rem)] md:max-h-[calc(100dvh-18.125rem)] md:min-h-[calc(100dvh-18.125rem)]"
+        className="max-h-[calc(100dvh-23.125rem)] min-h-[calc(100dvh-23.125rem)] w-full md:max-h-[calc(100dvh-18.125rem)] md:min-h-[calc(100dvh-18.125rem)]"
       >
         <BarChart accessibilityLayer data={chartData}>
           <CartesianGrid vertical={false} />

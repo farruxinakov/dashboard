@@ -80,7 +80,7 @@ const TableForm: React.FC<TableFormProps> = ({ initialData }) => {
 
       form.reset();
 
-      router.back();
+      router.replace(`/${params.bankId}`);
       router.refresh();
     } catch (error) {
       console.log(error);
@@ -95,7 +95,7 @@ const TableForm: React.FC<TableFormProps> = ({ initialData }) => {
 
       await axios.delete(`/api/${params.bankId}/tables/${params.tableId}`);
 
-      router.back();
+      router.replace(`/${params.bankId}`);
       router.refresh();
     } catch (error) {
       console.log(error);
