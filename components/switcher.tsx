@@ -1,12 +1,12 @@
 "use client";
 
+import { Dispatch, SetStateAction } from "react";
+
 import { useParams, useRouter } from "next/navigation";
 
-import { useState } from "react";
+import { Bank } from "@prisma/client";
 
 import { Check, ChevronsUpDown, PlusCircle } from "lucide-react";
-
-import { Bank } from "@prisma/client";
 
 import { useBankModal } from "@/store/use-bank-modal";
 
@@ -23,54 +23,54 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
+  CommandSeparator,
 } from "@/components/ui/command";
-import { Separator } from "@/components/ui/separator";
 
 interface SwitcherProps {
+  open: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
   banks: Bank[];
 }
 
-const Switcher: React.FC<SwitcherProps> = ({ banks }) => {
+const Switcher: React.FC<SwitcherProps> = ({ open, setIsOpen, banks }) => {
   const params = useParams();
   const router = useRouter();
-
-  const [isOpen, setIsOpen] = useState(false);
 
   const { onOpen } = useBankModal();
 
   const currentBank = banks.find((bank) => bank.id === params.bankId);
 
   return (
-    <Popover open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
+    <Popover open={open} onOpenChange={(open) => setIsOpen(open)}>
       <PopoverTrigger asChild>
-        <Button variant="outline">
-          {currentBank?.name}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+        <Button variant="outline" className="w-[12.5rem]">
+          <span className="truncate">{currentBank?.name}</span>
+          <ChevronsUpDown className="ml-auto h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent align="start" className="p-0">
+      <PopoverContent align="start" className="w-[12.5rem] p-0">
         <Command>
           <CommandInput placeholder="Поиск банка | банков" />
           <CommandList>
             <CommandEmpty>Результаты не найдены.</CommandEmpty>
-            <CommandGroup heading={banks.length >= 1 ? "Банк:" : "Банки:"}>
+            <CommandGroup>
               {banks.map((bank) => (
                 <CommandItem
                   key={bank.id}
                   onSelect={() => {
                     setIsOpen(false);
 
-                    router.push(`/${bank.id}`);
+                    router.push(bank.id);
                   }}
                 >
-                  {bank.name}
-                  {bank.id === currentBank?.id ? (
+                  <span className="truncate">{bank.name}</span>
+                  {bank.id === currentBank?.id && (
                     <Check className="ml-auto h-4 w-4" />
-                  ) : null}
+                  )}
                 </CommandItem>
               ))}
             </CommandGroup>
-            <Separator />
+            <CommandSeparator />
             <CommandGroup>
               <CommandItem
                 onSelect={() => {
@@ -80,7 +80,7 @@ const Switcher: React.FC<SwitcherProps> = ({ banks }) => {
                 }}
               >
                 <PlusCircle className="mr-2 h-4 w-4" />
-                Создайте новый банк
+                Создать новый банк
               </CommandItem>
             </CommandGroup>
           </CommandList>

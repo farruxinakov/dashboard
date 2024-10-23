@@ -7,13 +7,13 @@ import { cn } from "@/lib/utils";
 const paragraphVariants = cva("", {
   variants: {
     variant: {
-      defaulted: "leading-7",
+      default: "leading-7",
       lead: "text-xl text-muted-foreground",
       muted: "text-sm text-muted-foreground",
     },
   },
   defaultVariants: {
-    variant: "defaulted",
+    variant: "default",
   },
 });
 

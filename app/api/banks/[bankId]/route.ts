@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { auth } from "@/auth";
 
-import prisma from "@/db";
+import { prisma } from "@/db";
 
 export async function PATCH(
   req: NextRequest,
@@ -10,12 +10,13 @@ export async function PATCH(
 ) {
   try {
     const body = await req.json();
+
     const { name } = body;
 
     const session = await auth();
 
     if (!session?.user?.id) {
-      return new NextResponse("Unauthenticated", { status: 401 });
+      return new NextResponse("Неаутентифицированный", { status: 401 });
     }
 
     const exist = await prisma.bank.findFirst({
@@ -25,7 +26,7 @@ export async function PATCH(
     });
 
     if (exist) {
-      return new NextResponse("Conflict", { status: 409 });
+      return new NextResponse("Конфликт", { status: 409 });
     }
 
     const bank = await prisma.bank.update({
@@ -40,7 +41,7 @@ export async function PATCH(
 
     return NextResponse.json(bank);
   } catch (error) {
-    console.log(error);
+    return new NextResponse("Внутренняя ошибка", { status: 500 });
   }
 }
 
@@ -52,7 +53,7 @@ export async function DELETE(
     const session = await auth();
 
     if (!session?.user?.id) {
-      return new NextResponse("Unauthorized", { status: 401 });
+      return new NextResponse("Неаутентифицированный", { status: 401 });
     }
 
     const bank = await prisma.bank.delete({
@@ -64,6 +65,6 @@ export async function DELETE(
 
     return NextResponse.json(bank);
   } catch (error) {
-    console.log(error);
+    return new NextResponse("Внутренняя ошибка", { status: 500 });
   }
 }

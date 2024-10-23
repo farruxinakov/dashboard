@@ -3,12 +3,12 @@ import Credentials from "next-auth/providers/credentials";
 
 import { signInSchema } from "@/schemas/sign-in-schema";
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
+export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
     Credentials({
       credentials: {
-        name: { label: "Name", type: "text" },
-        password: { label: "Password", type: "text" },
+        name: { label: "Имя", type: "text" },
+        password: { label: "Пароль", type: "text" },
       },
       async authorize(credentials) {
         try {
@@ -32,7 +32,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     strategy: "jwt",
   },
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ user, token }) {
       if (user) {
         token.id = user.id;
         token.name = token.name;
@@ -40,7 +40,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       return token;
     },
-    async session({ session, token }) {
+    async session({ token, session }) {
       if (token) {
         session.user.id = token.id as string;
         session.user.name = token.name;

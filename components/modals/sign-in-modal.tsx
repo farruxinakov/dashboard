@@ -4,9 +4,9 @@ import { useState } from "react";
 
 import { signIn } from "next-auth/react";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useSignInModal } from "@/store/use-sign-in-modal";
 
@@ -53,7 +53,7 @@ const SignInModal = () => {
     if (response?.error) {
       setError("Неверное имя или пароль.");
     } else {
-      setError("");
+      setError(null);
 
       onClose();
 
@@ -65,8 +65,8 @@ const SignInModal = () => {
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title="Войти в аккаунт"
-      text="Введите свое имя и пароль ниже, чтобы войти в свою учетную запись."
+      title="Заголовок"
+      description="Описание."
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -102,7 +102,9 @@ const SignInModal = () => {
             </div>
           )}
           <div className="flex justify-end">
-            <Button disabled={isLoading}>Продолжить</Button>
+            <Button disabled={isLoading} type="submit">
+              Подтвердить
+            </Button>
           </div>
         </form>
       </Form>

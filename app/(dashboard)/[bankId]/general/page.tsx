@@ -4,16 +4,16 @@ import { format } from "date-fns";
 
 import { auth } from "@/auth";
 
-import prisma from "@/db";
+import { prisma } from "@/db";
 
 import Section from "@/components/custom-ui/section";
-import CommonClient from "./_components/common-client";
-import { TableColumn } from "./_components/column";
+import { columns, TableColumn } from "./_components/columns";
+import { DataTable } from "./_components/data-table";
 
-export default async function CommonPage() {
+export default async function GeneralPage() {
   const session = await auth();
 
-  if (!session?.user) {
+  if (!session?.user?.id) {
     redirect("/sign-in");
   }
 
@@ -38,7 +38,7 @@ export default async function CommonPage() {
     },
   });
 
-  const formattedTables: TableColumn[] = tables.map((table) => ({
+  const data: TableColumn[] = tables.map((table) => ({
     id: table.id,
     bankName: table.Bank.name,
     group: table.group,
@@ -56,8 +56,8 @@ export default async function CommonPage() {
   }));
 
   return (
-    <Section>
-      <CommonClient data={formattedTables} />
+    <Section title="Заголовок" description="Описание.">
+      <DataTable columns={columns} data={data} />
     </Section>
   );
 }

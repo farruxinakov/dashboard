@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 import { useBankModal } from "@/store/use-bank-modal";
 
-export default function SetUpPage() {
+export default function BankPage() {
   const { isOpen, onOpen } = useBankModal();
 
   useEffect(() => {

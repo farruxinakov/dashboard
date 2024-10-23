@@ -8,13 +8,13 @@ import { cn } from "@/lib/utils";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 const Navbar = () => {
-  const params = useParams();
   const pathname = usePathname();
+  const params = useParams();
 
   const routes = [
     {
       id: 1,
-      label: "Обзор",
+      label: "Главная",
       href: `/${params.bankId}`,
     },
     {
@@ -24,38 +24,38 @@ const Navbar = () => {
     },
     {
       id: 3,
-      label: "Общие",
-      href: `/${params.bankId}/common`,
+      label: "Общие Таблицы",
+      href: `/${params.bankId}/general`,
     },
     {
-      id: 3,
-      label: "Настройки",
+      id: 4,
+      label: "Параметры",
       href: `/${params.bankId}/settings`,
     },
   ];
 
   return (
-    <nav className="col-start-1 col-end-3 row-start-2 row-end-3 md:col-start-[initial] md:col-end-[initial] md:row-start-[initial] md:row-end-[initial]">
+    <nav>
       <ScrollArea className="whitespace-nowrap">
-        <ul>
-          {routes.map((route) => (
+        <ul className="pb-4 sm:pb-0">
+          {routes.map(({ id, href, label }) => (
             <li
-              key={route.id}
-              className="inline-flex h-9 items-center justify-center whitespace-nowrap px-4 py-2"
+              key={id}
+              className="inline-flex h-9 items-center justify-center whitespace-nowrap px-4 py-2 first:pl-0 last:pr-0"
             >
               <Link
-                href={route.href}
+                href={href}
                 className={cn(
-                  "relative text-sm font-medium before:absolute before:bottom-0 before:left-0 before:h-px before:w-0 before:translate-y-2 before:bg-primary before:transition-all before:duration-300 before:content-[''] hover:before:w-full",
-                  route.href === pathname && "before:w-full",
+                  "relative text-sm font-medium before:absolute before:bottom-0 before:left-0 before:-z-10 before:h-px before:w-0 before:translate-y-2 before:bg-primary before:transition-all before:duration-300 before:content-[''] hover:before:w-full",
+                  href === pathname && "before:w-full",
                 )}
               >
-                {route.label}
+                {label}
               </Link>
             </li>
           ))}
-          <ScrollBar orientation="horizontal" />
         </ul>
+        <ScrollBar orientation="horizontal" />
       </ScrollArea>
     </nav>
   );

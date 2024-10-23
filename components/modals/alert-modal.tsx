@@ -2,26 +2,20 @@
 
 import { useEffect, useState } from "react";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import Modal from "@/components/custom-ui/modal";
+import { DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
 interface AlertModalProps {
+  disabled: boolean;
   isOpen: boolean;
-  isLoading: boolean;
   onClose: () => void;
   onConfirm: () => void;
 }
 
 const AlertModal: React.FC<AlertModalProps> = ({
+  disabled,
   isOpen,
-  isLoading,
   onClose,
   onConfirm,
 }) => {
@@ -36,36 +30,21 @@ const AlertModal: React.FC<AlertModalProps> = ({
   }
 
   return (
-    <Dialog
-      open={isOpen}
-      onOpenChange={(open) => {
-        if (!open) {
-          onClose();
-        }
-      }}
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title="Заголовок"
+      description="Описание."
     >
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Вы абсолютно уверены?</DialogTitle>
-          <DialogDescription>
-            Это действие невозможно отменить. Ваш банк будет удален навсегда с
-            его данными с сервера.
-          </DialogDescription>
-        </DialogHeader>
-        <DialogFooter>
-          <Button
-            disabled={isLoading}
-            onClick={() => onClose()}
-            variant="outline"
-          >
-            Отменить
-          </Button>
-          <Button disabled={isLoading} onClick={() => onConfirm()}>
-            Подтвердить
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+      <DialogFooter>
+        <Button disabled={disabled} onClick={onClose} variant="outline">
+          Отменить
+        </Button>
+        <Button disabled={disabled} onClick={onConfirm}>
+          Подтвердить
+        </Button>
+      </DialogFooter>
+    </Modal>
   );
 };
 

@@ -26,7 +26,7 @@ interface HeadingProps
 
 const Heading = React.forwardRef<HTMLHeadingElement, HeadingProps>(
   ({ size, className, ...props }, ref) => {
-    const Tag: keyof JSX.IntrinsicElements = size || "h6";
+    const Tag: keyof React.JSX.IntrinsicElements = size || "h6";
 
     return (
       <Tag

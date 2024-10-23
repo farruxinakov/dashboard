@@ -1,5 +1,3 @@
-import { ReactNode } from "react";
-
 import {
   Dialog,
   DialogContent,
@@ -9,33 +7,26 @@ import {
 } from "@/components/ui/dialog";
 
 interface ModalProps {
+  children: React.ReactNode;
   isOpen: boolean;
   onClose: () => void;
   title: string;
-  text: string;
-  children: ReactNode;
+  description: string;
 }
 
 const Modal: React.FC<ModalProps> = ({
-  isOpen,
+  children,
+  isOpen: open,
   onClose,
   title,
-  text,
-  children,
+  description,
 }) => {
   return (
-    <Dialog
-      open={isOpen}
-      onOpenChange={(open) => {
-        if (!open) {
-          onClose();
-        }
-      }}
-    >
+    <Dialog open={open} onOpenChange={(open) => !open && onClose()}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>{text}</DialogDescription>
+          <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
         {children}
       </DialogContent>

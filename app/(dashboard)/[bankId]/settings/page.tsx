@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 
 import { auth } from "@/auth";
 
-import prisma from "@/db";
+import { prisma } from "@/db";
 
 import Section from "@/components/custom-ui/section";
 import SettingsForm from "./_components/settings-form";
@@ -14,8 +14,8 @@ export default async function SettingsPage({
 }) {
   const session = await auth();
 
-  if (!session?.user) {
-    redirect("/");
+  if (!session?.user?.id) {
+    redirect("/sign-in");
   }
 
   const bank = await prisma.bank.findFirst({
@@ -30,10 +30,13 @@ export default async function SettingsPage({
   }
 
   return (
-    <>
-      <Section>
-        <SettingsForm initialData={bank} />
-      </Section>
-    </>
+    <Section
+      title="Заголовок"
+      description="Описание."
+      label="Удалить"
+      route={`/api/banks/${params.bankId}`}
+    >
+      <SettingsForm initialData={bank} />
+    </Section>
   );
 }

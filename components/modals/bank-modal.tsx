@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 
 import { useBankModal } from "@/store/use-bank-modal";
@@ -41,15 +41,15 @@ const BankModal = () => {
 
       const response = await axios.post("/api/banks", values);
 
-      form.reset();
-
       onClose();
 
-      window.location.assign(`/${response.data.id}`);
+      window.location.assign(response.data.id);
     } catch (error) {
       console.log(error);
     } finally {
       setIsLoading(false);
+
+      form.reset();
     }
   };
 
@@ -57,8 +57,8 @@ const BankModal = () => {
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title="Создайте банк"
-      text="Введите название банка ниже, чтобы создать его."
+      title="Заголовок"
+      description="Описание."
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">

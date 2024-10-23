@@ -5,7 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { Edit } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { TableColumn } from "./column";
+import { TableColumn } from "./columns";
 
 interface CellActionsProps {
   data: TableColumn;
@@ -22,6 +22,7 @@ const CellActions: React.FC<CellActionsProps> = ({ data }) => {
       size="icon"
     >
       <Edit className="h-4 w-4" />
+      <span className="sr-only">Внести Изменения</span>
     </Button>
   );
 };

@@ -1,15 +1,15 @@
-import { redirect } from "next/navigation";
-
 import { PropsWithChildren } from "react";
+
+import { redirect } from "next/navigation";
 
 import { auth } from "@/auth";
 
-import prisma from "@/db";
+import { prisma } from "@/db";
 
-export default async function SetUpLayout({ children }: PropsWithChildren) {
+export default async function BankLayout({ children }: PropsWithChildren) {
   const session = await auth();
 
-  if (!session?.user) {
+  if (!session?.user?.id) {
     redirect("/sign-in");
   }
 

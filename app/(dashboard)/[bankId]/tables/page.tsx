@@ -1,10 +1,10 @@
 import { format } from "date-fns";
 
-import prisma from "@/db";
+import { prisma } from "@/db";
 
 import Section from "@/components/custom-ui/section";
-import { TableColumn } from "./_components/column";
-import TablesClient from "./_components/tables-client";
+import { TableColumn, columns } from "./_components/columns";
+import { DataTable } from "./_components/data-table";
 
 export default async function TablesPage({
   params,
@@ -15,12 +15,9 @@ export default async function TablesPage({
     where: {
       bankId: params.bankId,
     },
-    orderBy: {
-      createdAt: "desc",
-    },
   });
 
-  const formattedTables: TableColumn[] = tables.map((table) => ({
+  const data: TableColumn[] = tables.map((table) => ({
     id: table.id,
     group: table.group,
     performer: table.performer,
@@ -37,10 +34,13 @@ export default async function TablesPage({
   }));
 
   return (
-    <>
-      <Section>
-        <TablesClient data={formattedTables} />
-      </Section>
-    </>
+    <Section
+      title="Заголовок"
+      description="Описание."
+      label="Создать"
+      route={`/${params.bankId}/tables/new`}
+    >
+      <DataTable columns={columns} data={data} />
+    </Section>
   );
 }
