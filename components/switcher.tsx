@@ -60,7 +60,7 @@ const Switcher: React.FC<SwitcherProps> = ({ open, setIsOpen, banks }) => {
                   onSelect={() => {
                     setIsOpen(false);
 
-                    router.push(bank.id);
+                    router.push(`/${bank.id}`);
                   }}
                 >
                   <span className="truncate">{bank.name}</span>

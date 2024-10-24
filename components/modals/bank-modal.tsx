@@ -43,7 +43,7 @@ const BankModal = () => {
 
       onClose();
 
-      window.location.assign(response.data.id);
+      window.location.assign(`/${response.data.id}`);
     } catch (error) {
       console.log(error);
     } finally {
