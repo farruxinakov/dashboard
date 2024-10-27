@@ -16,8 +16,8 @@ export default async function TablePage({
 
   return (
     <Section
-      title="Заголовок"
-      description="Описание."
+      title={table ? "Внести Изменения" : "Создать"}
+      description={table ? "Тут вы можете внести изменения для своей таблицы." : "Тут вы можете создать новую таблицу."}
       label={table && "Удалить"}
       route={`/api/${params.bankId}/tables/${params.tableId}`}
       replace={`/${params.bankId}`}
