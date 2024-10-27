@@ -32,7 +32,7 @@ export default async function SettingsPage({
   return (
     <Section
       title="Параметры"
-      description="Тут вы можете внести изменения, а также удалить свои банк."
+      description="Тут вы можете внести изменения, а также удалить свой банк."
       label="Удалить"
       route={`/api/banks/${params.bankId}`}
     >
