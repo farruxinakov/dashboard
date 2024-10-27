@@ -90,7 +90,7 @@ export function DataTable<TData, TValue>({
           placeholder="Поиск"
           className="md:max-w-sm"
         />
-        <div className="flex items-center justify-between gap-x-4">
+           <div className="flex flex-col md:flex-row md:items-center md:justify-between">
           <Button onClick={() => table.resetColumnFilters()} variant="outline">
             Сбросить
           </Button>

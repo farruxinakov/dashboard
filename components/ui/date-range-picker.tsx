@@ -34,7 +34,6 @@ export function DateRangePicker({ onDateRangeChange }: DateRangePickerProps) {
   }, [date, onDateRangeChange]);
 
   return (
-    <div className="grid gap-2">
       <Popover>
         <PopoverTrigger asChild>
           <Button
@@ -68,6 +67,5 @@ export function DateRangePicker({ onDateRangeChange }: DateRangePickerProps) {
           />
         </PopoverContent>
       </Popover>
-    </div>
   );
 }
