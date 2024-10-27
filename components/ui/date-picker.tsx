@@ -26,7 +26,7 @@ export function DatePicker({ disabled, selected, onSelect }: DatePickerProps) {
         <Button
           disabled={disabled}
           variant="outline"
-          className={cn("w-full ", !selected && "text-muted-foreground")}
+          className={cn(!selected && "text-muted-foreground")}
         >
           <CalendarIcon />
           {selected ? format(selected, "PPP") : <span>Выберите Дату</span>}
